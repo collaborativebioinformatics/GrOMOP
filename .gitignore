@@ -13,3 +13,7 @@
 
 #MAC
 .DS_Store
+cosmic*
+*.vcf
+*.Dockerfile
+*.tgz
