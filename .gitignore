@@ -6,3 +6,10 @@
 *.vcf
 *.gz
 *.tbi
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+#MAC
+.DS_Store
