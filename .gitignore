@@ -1,0 +1,4 @@
+cosmic*
+*.vcf
+*.Dockerfile
+*.tgz
