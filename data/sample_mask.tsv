@@ -1,0 +1,4 @@
+alias	example	field	table	field_idx	set_value
+patient	bob	person_source_value	person	1	NA
+vcf_file	../../data/bob.vcf	file_local_source	sequencing	1	NA
+tumor	breast	specimen_source_value	specimen	1	NA
