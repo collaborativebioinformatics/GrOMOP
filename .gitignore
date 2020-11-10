@@ -1,0 +1,8 @@
+.Rproj.user
+*.Rproj
+.Rhistory
+.RData
+.Ruserdata
+*.vcf
+*.gz
+*.tbi
