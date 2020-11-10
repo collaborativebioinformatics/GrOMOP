@@ -63,6 +63,6 @@ dat <- dat %>%
   mutate(COHORT="10K_Adult_Cancers_Germline_Variants_Huang_et_al_2019") %>%
   mutate(RISK = TRUE, DRIVER = FALSE)
 
-
+readr::write_tsv(dat, "~/gromop/data/NIHMS957308-supplement-2.10k-germline-pathogenic.converted.tsv")
 
 
