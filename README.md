@@ -68,6 +68,6 @@ One of the key features of gromop is that inference improves with each EVS and s
 OMOP can be used to establish relationships between sets of variants. In gromop, we aim to provide one clear example of an encoding between the variants sets of a normal, tumor, and metastatic specimen all from one patient.
 
 ### EVS serialization and sharing
-Because an EVS or cohort EVS contains nowdirect sample-level information (i.e. no genotypes, phasing information, or sample metadata), they are largely anonymized and can be shared once read count info is removed. Since we encode an EVS in a dataframe, the EVS can be serialized to a file. This file can then be incorporated into an OMOP record for the study or patient. A patient's risk profile can quickly be reconstituted by someone with access to the sequencing reads, without exposing information about other individuals in the cohort.
+Because an EVS or cohort EVS contains no direct sample-level information (i.e. no genotypes, phasing information, or sample metadata), they are largely anonymized and can be shared once read count info is removed. Since we encode an EVS in a dataframe, the EVS can be serialized to a file. This file can then be incorporated into an OMOP record for the study or patient. A patient's risk profile can quickly be reconstituted by someone with access to the sequencing reads, without exposing information about other individuals in the cohort.
 
 
