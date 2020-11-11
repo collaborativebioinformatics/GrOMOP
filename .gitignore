@@ -13,7 +13,7 @@ cosmic*
 .Rhistory
 .RData
 .Ruserdata
-*test_data
+*data/toy_data
 
 #MAC
 .DS_Store
