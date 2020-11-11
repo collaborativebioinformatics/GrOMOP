@@ -1,3 +1,5 @@
+cosmic*
+*.Dockerfile
 .Rproj.user
 *.Rproj
 .Rhistory
@@ -6,10 +8,12 @@
 *.vcf
 *.gz
 *.tbi
+*.tgz
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+test_data/
 
 #MAC
 .DS_Store
