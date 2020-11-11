@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 ## count_variant_supports.R
 ## Reads in a transformed mpileup file
 ## and calculates the variant supporting reads
@@ -14,6 +15,8 @@ parser <- arg_parser("wsvc: A simple pileup-based variant caller.")
 parser <- add_argument(parser, "--input", "A transformed mpileup file from which to call variants.", type="character", default="-")
 #parser <- add_argument(parser, "--ploidy", "Estimated ploidy at the variant site.", default=2, type="numeric")
 #parser <- add_argument(parser, "--allele", "The allele of interest", type="character")
+
+argv <- parse_args(parser)
 
 read_mpileup <- function(fname){
   x <- readr::read_tsv(fname)

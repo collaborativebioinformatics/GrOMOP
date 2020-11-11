@@ -14,6 +14,8 @@ cosmic*
 .RData
 .Ruserdata
 *data/toy_data
+test_data/
+.nextflow*
 
 #MAC
 .DS_Store
