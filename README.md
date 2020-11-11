@@ -17,7 +17,7 @@ for analyzing data across electronic medical records and claims data using a sin
 This model is extensible, allowing new datatypes to be integrated as they are developed.
 
 Here, we describe gromop, which leverages OMOP to drive highly sensitive genetic analysis
-and provide provenance. This repo implements an analysis-as-data-model method which
+and provide sample-level provenance using a simple high-level user interface. This repo implements an analysis-as-data-model method which
 progressively updates a set of variants in samples/cohorts, with a focus on variants
 associated with cancer. The benefits of our model lie in its ease-of-use and in the 
 enhanced sensitivity for detecting specific mutations of interest.
