@@ -8,12 +8,15 @@ library(magrittr)
 library(GenomicRanges)
 library(lubridate)
 
-toy_directory <- here("test_data/toy_evs")
+toy_directory <- here("data/toy_data")
 genders       <- c(male=0.48,female=0.49,na=0.03)
 source_tissues<- c("liver","skin","brain","bowel","testicle","pancreas")
 cancer_types  <- c("CFF45","Devi5 positive","ETV4 negative","LEK33","LolNah")
+sequencers    <- c("Roche 454","Illumina MiSeq","Illumina HiSeq","Life Technologies Ion Torrent","PacBio RS")
 chroms        <- paste0("chr",c(1:21,"X","Y"))
 outcomes      <- c(deceased=0.4,alive=0.6)
+variant_types <- c(meta_driver=0.01,cooccurring=0.399,indel=0.6)
+locations     <- c("Case Western","Andrew's basement","University of Pittsburgh","Olive Garden Queensbury NY","Atlanta GA","Glens Falls NY")
 biopsy_count  <- c("1"=0.6,"2"=0.3,"3"=0.05,"4"=0.025,"5"=0.025)
 pat_num       <- 100
 date_range    <- seq(ymd("1995-01-01"),ymd("2020-11-11"),by="day")
@@ -36,17 +39,19 @@ generate_variant_set  <- function(patient_id="TT453FF",test_number=1,out_length_
              len = sample(c(1:10),size = 1),
              end = start + len,
              ref = sample(c("A","C","G","T"),replace=TRUE,size = len) %>% paste(collapse=""),
-             alt = sample(c("A","C","G","T"),replace=TRUE,size = len) %>% paste(collapse="")) %>%
+             alt = sample(c("A","C","G","T"),replace=TRUE,size = len) %>% paste(collapse=""),
+             flag = sample(names(variant_types),prob = variant_types,size = n(),replace = TRUE)) %>%
       select(-len) %>%
-      write.csv(file = file.path(write_directory,out_file_name),quote = FALSE,row.names = FALSE)
+      write.table(file = file.path(write_directory,out_file_name),sep="\t",quote = FALSE,row.names = FALSE)
   }
-  return(out_file_name)
+  return(file.path(write_directory,out_file_name))
 }
 
 evs_file  <- tibble(patient_id = sapply(c(1:pat_num), function(x) random_patient_id())) %>%
               mutate(gender = sample(names(genders),prob = genders,size = n(),replace = TRUE),
                      tissue = sample(source_tissues,size=n(),replace =TRUE),
                      type = sample(cancer_types,size=n(),replace=TRUE),
+                     location = sample(locations,size=n(),replace=TRUE),
                      date = sample(date_range,replace = TRUE,size = n())) %>%
               rowwise() %>%
               mutate(biopsy = list(c(1:as.integer(sample(names(biopsy_count),prob=biopsy_count,size = n(),replace = TRUE))))) %>%
@@ -59,6 +64,8 @@ evs_file  <- tibble(patient_id = sapply(c(1:pat_num), function(x) random_patient
                                      sample(names(outcomes),prob = outcomes,size = 1)),
                      more_days = sample(c(1:365),size = n()),
                      more_days = ifelse(final,more_days,0),
-                     date = date + days(more_days)) %>%
-              select(-final,-more_days) %T>%
+                     date = date + days(more_days),
+                     system = sample(sequencers,replace=TRUE,size=n())) %>%
+              select(-final,-more_days) %>%
+              ungroup() %T>%
                 write.csv(file = file.path(toy_directory,"evs_file_summary.csv"),row.names = FALSE,quote = FALSE)
