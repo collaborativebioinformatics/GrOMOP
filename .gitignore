@@ -11,7 +11,7 @@
 .RData
 .Ruserdata
 test_data/
-
+.nextflow*
 #MAC
 .DS_Store
 cosmic*
