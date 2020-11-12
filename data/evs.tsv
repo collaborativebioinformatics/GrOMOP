@@ -1,3 +1,3 @@
-enhanced_variant_set	enhanced_variant_set_description	evs_file
-Met	collection of variants from metastatic tumors	met.vcf
-Ben	collection of variants from benign tumors	ben.vcf
+enhanced_variant_set	enhanced_variant_set_description	evs_file	evs_disease
+Met	collection of variants	met.vcf	metastatic cancer
+Ben	collection of variants	ben.vcf	benign cancer
