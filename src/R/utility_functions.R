@@ -10,7 +10,7 @@ vectify   <- function (table_in, value_col, name_col){
   return(vals)
 }
 
-scan_evs_flags  <- function(evs_file_list = evs_files,flag_column_num=6,flag_val="indel"){
+scan_evs_flags  <- function(evs_file_list,flag_column_num=6,flag_val="indel"){
   #Counts flags via the shell (for speed).
   fread(cmd=
           paste0("ARRAY=(",paste(evs_file_list,collapse=" "),");",
