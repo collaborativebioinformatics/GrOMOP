@@ -13,7 +13,7 @@ such data(cite FHIR, OMOP).
 
 
 The Observational Medical Outcomes Partnership (OMOP) Common Data Model provides a framework
-for analyzing data across electronic medical records and claims data using a single unifiying vocabulary.
+for analyzing data across electronic medical records and claims data using standard entity relationships and vocabularies.
 This model is extensible, allowing new datatypes to be integrated as they are developed.
 
 Here, we describe gromop, which leverages OMOP to drive highly sensitive genetic analysis
