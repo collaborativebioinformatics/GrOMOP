@@ -4,10 +4,11 @@
 #Files are placed in the <toy_directory>, along with a summary file "evs_file_summary.tsv".
 
 library(tidyverse)
+library(data.table)
 library(magrittr)
 library(GenomicRanges)
 library(lubridate)
-
+library(here)
 source(here("src/R/utility_functions.R"))
 
 toy_directory <- here("data/toy_data")
