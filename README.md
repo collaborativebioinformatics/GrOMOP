@@ -30,8 +30,8 @@ variant-of-interest assessment in the context of cancer.
 An _enhanced variant set_ is a set of variants in VCF, MAF, or TSV format. For
 TSV files, the following columns must exist:
 - chrom
-- start_pos
-- end_pos
+- start\_pos
+- end\_pos
 - ref
 - alt
 
