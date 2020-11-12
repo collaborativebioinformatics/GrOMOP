@@ -37,5 +37,5 @@ dim(tb2)
 head(tb)
 head(tb2)
 
-meta_data <- as_tibble(tb2)
+#Build database.
 
