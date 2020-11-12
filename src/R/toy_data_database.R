@@ -6,6 +6,7 @@ library(tidyverse)
 library(data.table)
 library(magrittr)
 library(here)
+library(dbplyr)
 
 source(here("src/R/utility_functions.R"))
 
@@ -37,5 +38,25 @@ dim(tb2)
 head(tb)
 head(tb2)
 
-#Build database.
+#ROMOPOmics.
+dm      <- loadDataModel(master_table_file = here("src/OMOP_CDM_v6_0_GrOMOP.csv"))
+msk     <- loadModelMasks(mask_files = here("src/toy_mask_example.tsv"))
+file_in <- file.path(dir_data,"evs_metadata.csv")
+omop_in <- readInputFile(file_in,data_model = dm,mask_table = msk,transpose_input_table = TRUE)
+db_in   <- combineInputTables(input_table_list = omop_in) #Still broken???
+omop_db <- buildSQLDBR(db_in,sql_db_file = file.path(dir_data,"toy_sql.db"))
+#write.table(fread(here("src/toy_mask_example.csv")),quote = FALSE,sep = "\t",file = here("src/toy_mask_example.tsv"),row.names = FALSE)
+
+tbls  <- db_list_tables(omop_db)
+
+inner_join(x = tbl(omop_db,"PERSON"),tbl(omop_db,"SPECIMEN")) %>%
+  inner_join(tbl(omop_db,"SEQUENCING")) %>%
+  select_if(function(x) !all(is.na(x))) %>%
+  filter(specimen_source_value == "metastatic driver" & quantity > 0) %>%
+  select(person_source_value,specimen_source_value,quantity,unit_concept_id,file_local_source) %>%
+  as_tibble() %>%
+  mutate(file_local_source = basename(file_local_source))
+           
+  
+  
 

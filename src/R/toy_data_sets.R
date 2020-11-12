@@ -11,6 +11,7 @@ library(lubridate)
 library(here)
 source(here("src/R/utility_functions.R"))
 
+pat_num       <- 100
 toy_directory <- here("data/toy_data")
 dir.create(toy_directory,showWarnings = FALSE)
 genders       <- c(male=0.48,female=0.49,na=0.03)
@@ -24,7 +25,7 @@ stages        <- c(I=0.6,II=0.2,III=0.15,IV=0.05)
 sample_method <- c(biopsy=0.6,blood_draw=0.3,swab=0.1)
 biopsy_count  <- c("1"=0.6,"2"=0.3,"3"=0.05,"4"=0.025,"5"=0.025)
 flags         <- c(meta_driver=0.01,cooccurring=0.3,indel=0.69)
-pat_num       <- 100
+
 date_range    <- seq(ymd("1995-01-01"),ymd("2020-11-11"),by="day")
 
 random_patient_id     <- function(char_len=8){

@@ -1,0 +1,22 @@
+alias	field	table	field_idx	set_value	example
+patient_id	person_source_value	PERSON	NA		SKGHH44F
+gender	gender_concept_id	PERSON	NA		female
+tissue	anatomic_site_concept_id	SPECIMEN	NA		skin
+stage	disease_status_source_value	SPECIMEN	NA		III
+date	observation_date	OBSERVATION	NA		10/26/1999
+biopsy	visit_occurrence_id	OBSERVATION	NA		2
+evs_file	file_local_source	SEQUENCING	NA		data/test_data
+status			NA		
+met	quantity	SPECIMEN	1		5
+met_unit	unit_concept_id	SPECIMEN	1	mutations	mutations
+met_desc	specimen_source_value	SPECIMEN	1	metastatic driver	metastatic driver
+coo	quantity	SPECIMEN	2		3
+coo_unit	unit_concept_id	SPECIMEN	2	mutations	mutations
+coo_desc	specimen_source_value	SPECIMEN	2	cooccurring mutations	cooccurring mutations
+ind	quantity	SPECIMEN	3		1
+ind_unit	unit_concept_id	SPECIMEN	3	mutations	mutations
+ind_desc	specimen_source_value	SPECIMEN	3	indels	indels
+genome	reference_genome_value	SEQUENCING	NA		hg38
+sample_method	observation_type_concept_id	OBSERVATION	NA		biopsy
+location	address_1	LOCATION	NA		Atlanta GA
+instrument	instrument_source_value	SEQUENCING	NA		Illumina MiSeq
