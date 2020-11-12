@@ -9,7 +9,7 @@ have sought to improve healthcare using genetic information. Sequencing of
 patients - particularly those diagnosed with cancer - is becoming routine in
 clinical settings. There has been a concurrent acceleration in the development
 of electronic health records, partially driven by adoption of new standards for sharing
-such data(cite FHIR, OMOP).
+such data(https://www.hl7.org/fhir/index.html, https://www.ohdsi.org/data-standardization/the-common-data-model/).
 
 
 The Observational Medical Outcomes Partnership (OMOP) Common Data Model provides a framework
@@ -30,8 +30,8 @@ variant-of-interest assessment in the context of cancer.
 An _enhanced variant set_ is a set of variants in VCF, MAF, or TSV format. For
 TSV files, the following columns must exist:
 - chrom
-- start_pos
-- end_pos
+- start\_pos
+- end\_pos
 - ref
 - alt
 
