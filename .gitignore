@@ -1,3 +1,5 @@
+cosmic*
+*.Dockerfile
 .Rproj.user
 *.Rproj
 .Rhistory
@@ -6,6 +8,7 @@
 *.vcf
 *.gz
 *.tbi
+*.tgz
 .Rproj.user
 .Rhistory
 .RData
@@ -23,3 +26,9 @@ cosmic*
 *.tbi
 *.Dockerfile
 *.tgz
+*data/toy_data
+test_data/
+.nextflow*
+
+#MAC
+.DS_Store
