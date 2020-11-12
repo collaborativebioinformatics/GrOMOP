@@ -7,7 +7,7 @@ library(tidyverse)
 library(magrittr)
 library(GenomicRanges)
 library(lubridate)
-
+library(here)
 source(here("src/R/utility_functions.R"))
 
 toy_directory <- here("data/toy_data")
