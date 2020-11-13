@@ -22,6 +22,7 @@ read_mpileup <- function(fname, col_types=cols(
                 Chromosome=col_character(),
                 Position=col_integer(),
                 REF=col_character(),
+                Variant_Type=col_character(),
                 ALT=col_character())){
   x <- readr::read_tsv(fname
       )
@@ -40,6 +41,7 @@ read_calls <- read_mpileup(argv$input)
 counts <- read_calls %>%
   group_by(chrom, start_pos, end_pos, ref, alt, variant_type, SAMPLE) %>%
   summarize(count = n()) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(ref = ifelse(ref == TRUE, "T", ref))
 
 cat(readr::format_tsv(counts))
