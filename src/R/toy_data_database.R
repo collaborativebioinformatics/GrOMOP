@@ -61,3 +61,5 @@ inner_join(x = tbl(omop_db,"PERSON"),tbl(omop_db,"SPECIMEN")) %>%
   mutate(file_local_source = basename(file_local_source)) %>%
   rowwise() %>%
   mutate(description = read_athena(disease_status_source_value))
+  
+DBI::dbDisconnect(omop_db)

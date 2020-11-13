@@ -87,4 +87,6 @@ inner_join(x = tbl(omop_db,"PERSON"),tbl(omop_db,"SPECIMEN")) %>%
          file_local_source = basename(file_local_source)) %>%
   select(person_source_value,specimen_source_value,quantity,unit_concept_id,file_local_source,description) %>%
   kable() %>% kable_styling(full_width=TRUE)
+
+DBI::dbDisconnect(omop_db)
 ```

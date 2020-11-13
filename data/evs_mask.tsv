@@ -1,4 +1,6 @@
 alias	example	field	table	field_idx	set_value
-enhanced_variant_set	Met	cohort_definition_name	cohort_definition	1	NA
-evs_file	../../data/evs.vcf	cohort_file_local_source	sequencing	1	NA
-enhanced_variant_set_description	collection of variants	cohort_definition_description	cohort_definition	1	NA
+enhanced_variant_set	Met	evs_cohort_name	evs_cohort	1	NA
+evs_file	../../data/evs.vcf	evs_cohort_file_local_source	evs_cohort	1	NA
+enhanced_variant_set_description	collection of variants	evs_cohort_definition_type	evs_cohort_definition	1	NA
+evs_disease	cancer	evs_cohort_definition_disease	evs_cohort_definition	1	NA
+enhanced_variant_set	Met	evs_cohort_definition_name	evs_cohort_definition	1	NA
