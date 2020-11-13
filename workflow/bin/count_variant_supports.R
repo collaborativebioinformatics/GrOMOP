@@ -18,13 +18,20 @@ parser <- add_argument(parser, "--input", "A transformed mpileup file from which
 
 argv <- parse_args(parser)
 
-read_mpileup <- function(fname){
-  x <- readr::read_tsv(fname)
+read_mpileup <- function(fname, col_types=cols(
+                Chromosome=col_character(),
+                Position=col_integer(),
+                REF=col_character(),
+                Variant_Type=col_character(),
+                ALT=col_character())){
+  x <- readr::read_tsv(fname
+      )
   x <- x %>%
     rename(chrom=Chromosome,
            start_pos=Position,
            ref=REF,
-           alt=ALT) %>%
+           alt=ALT,
+           variant_type=Variant_Type) %>%
     mutate(end_pos = max(start_pos + stringr::str_length(alt) - 1, start_pos + stringr::str_length(ref) - 1))
   return (x)
 }
@@ -32,8 +39,9 @@ read_mpileup <- function(fname){
 read_calls <- read_mpileup(argv$input)
 
 counts <- read_calls %>%
-  group_by(chrom, start_pos, end_pos, ref, alt, SAMPLE) %>%
+  group_by(chrom, start_pos, end_pos, ref, alt, variant_type, SAMPLE) %>%
   summarize(count = n()) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(ref = ifelse(ref == TRUE, "T", ref))
 
 cat(readr::format_tsv(counts))
