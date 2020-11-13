@@ -51,7 +51,7 @@ omop_db <- buildSQLDBR(omop_tables = db_in,sql_db_file = file.path(dir_data,"toy
 #write.table(fread(here("src/toy_mask_example.csv")),quote = FALSE,sep = "\t",file = here("src/toy_mask_example.tsv"),row.names = FALSE)
 
 tbls  <- db_list_tables(omop_db)
-
+x<- tbl(omop_db,'SPECIMEN')
 inner_join(x = tbl(omop_db,"PERSON"),tbl(omop_db,"SPECIMEN")) %>% 
   inner_join(tbl(omop_db,"SEQUENCING")) %>%
   select_if(function(x) !all(is.na(x))) %>% 
