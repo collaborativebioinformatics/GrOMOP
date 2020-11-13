@@ -18,4 +18,11 @@ scan_evs_flags  <- function(evs_file_list,flag_column_num=6,flag_val="indel"){
     unlist(use.names=FALSE)
 }
 
-
+read_athena   <- function(input_code="94626004",athena_file = here("data/athena_metastatic.csv")){
+  fread(athena_file) %>%
+    filter(Code == input_code) %>%
+    top_n(1,row_number()) %>%
+    select(Name) %>%
+    unlist(use.names = FALSE) %>%
+    return()
+}

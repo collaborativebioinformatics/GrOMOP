@@ -2,7 +2,7 @@ alias	field	table	field_idx	set_value	example
 patient_id	person_source_value	PERSON	NA		SKGHH44F
 gender	gender_concept_id	PERSON	NA		female
 tissue	anatomic_site_concept_id	SPECIMEN	NA		skin
-stage	disease_status_source_value	SPECIMEN	NA		III
+condition	disease_status_source_value	SPECIMEN	NA		94289002
 date	observation_date	OBSERVATION	NA		10/26/1999
 biopsy	visit_occurrence_id	OBSERVATION	NA		2
 evs_file	file_local_source	SEQUENCING	NA		data/test_data

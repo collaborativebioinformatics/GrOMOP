@@ -26,6 +26,13 @@ sample_method <- c(biopsy=0.6,blood_draw=0.3,swab=0.1)
 biopsy_count  <- c("1"=0.6,"2"=0.3,"3"=0.05,"4"=0.025,"5"=0.025)
 flags         <- c(meta_driver=0.01,cooccurring=0.3,indel=0.69)
 
+#Athena resuls; randomly select 20 maglignancies.
+athena_res<- fread(here("data/athena_metastatic.csv")) %>%
+              filter(Domain=="Condition",
+                     grepl("malignant",Name)) %>%
+              sample_n(size=20,replace=FALSE) %>%
+              select(Code) %>% unlist(use.names=FALSE)
+
 date_range    <- seq(ymd("1995-01-01"),ymd("2020-11-11"),by="day")
 
 random_patient_id     <- function(char_len=8){
@@ -56,7 +63,8 @@ generate_variant_set  <- function(patient_id="TT453FF",test_number=1,out_length_
 
 evs_tb  <- tibble(patient_id = sapply(c(1:pat_num), function(x) random_patient_id())) %>%
             mutate(gender = sample(names(genders),prob = genders,size = n(),replace = TRUE),
-                   tissue = sample(source_tissues,size=n(),replace =TRUE),
+                   condition = sample(athena_res,size = n(),replace = TRUE),
+                   #tissue = sample(source_tissues,size=n(),replace =TRUE),
                    #type = sample(cancer_types,size=n(),replace=TRUE),
                    date = sample(date_range,replace = TRUE,size = n())) %>%
             rowwise() %>%

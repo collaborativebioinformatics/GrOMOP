@@ -1,0 +1,90 @@
+---
+title: "Example variant query"
+author: "Andrew"
+date: "11/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,message=FALSE,warning=FALSE)
+library(ROMOPOmics)
+library(tidyverse)
+library(data.table)
+library(magrittr)
+library(here)
+library(dbplyr)
+library(knitr)
+library(kableExtra)
+
+dir_data  <- here("data/toy_data")
+dir_src   <- here("src")
+
+source(file.path(dir_src,"R/utility_functions.R"))
+
+rename    <- dplyr::rename
+mutate    <- dplyr::mutate
+```
+
+#Load EVS database
+```{r BuildDatabase}
+dm      <- loadDataModel(master_table_file = file.path(dir_src,"OMOP_CDM_v6_0_GrOMOP.csv"))
+msk     <- loadModelMasks(mask_files = file.path(dir_src,"toy_mask_example.tsv"))
+file_in <- file.path(dir_data,"evs_metadata.csv")
+omop_in <- readInputFile(file_in,data_model = dm,mask_table = msk,transpose_input_table = TRUE)
+db_in   <- combineInputTables(input_table_list = omop_in) 
+omop_db <- buildSQLDBR(omop_tables = db_in,sql_db_file = ":memory:")
+
+db_list_tables(omop_db)
+```
+
+##Preview of EVS files:
+```{r previewEVS,echo=FALSE}
+tbl(omop_db,"SEQUENCING") %>%
+  select(file_local_source) %>%
+  as_tibble() %>%
+  top_n(n = 1,wt=row_number()) %>%
+  unlist() %>%
+  fread() %>%
+  head() %>% 
+  kable() %>%
+  kable_styling(full_width = FALSE)
+```
+
+##Query EVS database
+```{r athenaID1,echo=FALSE}
+athena_id   <- "94626004"
+```
+
+###Query 1: 
+####Variant sets annotated with "`r read_athena(athena_id)`" (SNOMED ID `r athena_id`) with at least one metastatic driver variant.
+```{r queryDatabase1}
+inner_join(x = tbl(omop_db,"PERSON"),tbl(omop_db,"SPECIMEN")) %>% 
+  inner_join(tbl(omop_db,"SEQUENCING")) %>%
+  filter(disease_status_source_value == "94626004" & quantity > 0,
+         specimen_source_value == "metastatic driver") %>%
+  as_tibble() %>%
+  rowwise() %>%
+  mutate(description = read_athena(disease_status_source_value),
+         file_local_source = basename(file_local_source)) %>%
+  select(person_source_value,specimen_source_value,quantity,unit_concept_id,file_local_source,description) %>%
+  kable() %>% kable_styling(full_width=TRUE)
+```
+
+```{r athenaID2,echo=FALSE}
+athena_id   <- "94398002"
+```
+
+###Query 2:
+####Any mutations associated with annotated with "`r read_athena(athena_id)`" (SNOMED ID `r athena_id`).
+```{r queryDatabase2}
+inner_join(x = tbl(omop_db,"PERSON"),tbl(omop_db,"SPECIMEN")) %>% 
+  inner_join(tbl(omop_db,"SEQUENCING")) %>%
+  filter(disease_status_source_value == "94398002",
+         quantity > 0) %>%
+  as_tibble() %>%
+  rowwise() %>%
+  mutate(description = read_athena(disease_status_source_value),
+         file_local_source = basename(file_local_source)) %>%
+  select(person_source_value,specimen_source_value,quantity,unit_concept_id,file_local_source,description) %>%
+  kable() %>% kable_styling(full_width=TRUE)
+```

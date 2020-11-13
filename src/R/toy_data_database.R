@@ -13,6 +13,9 @@ source(here("src/R/utility_functions.R"))
 rename    <- dplyr::rename
 mutate    <- dplyr::mutate
 
+
+  
+
 dir_data  <- here("data/toy_data")
 
 #Option 1: Scan director(ies) for ESV files, count their flags.
@@ -44,19 +47,17 @@ msk     <- loadModelMasks(mask_files = here("src/toy_mask_example.tsv"))
 file_in <- file.path(dir_data,"evs_metadata.csv")
 omop_in <- readInputFile(file_in,data_model = dm,mask_table = msk,transpose_input_table = TRUE)
 db_in   <- combineInputTables(input_table_list = omop_in) #Still broken???
-omop_db <- buildSQLDBR(db_in,sql_db_file = file.path(dir_data,"toy_sql.db"))
+omop_db <- buildSQLDBR(omop_tables = db_in,sql_db_file = file.path(dir_data,"toy_sql.db"))
 #write.table(fread(here("src/toy_mask_example.csv")),quote = FALSE,sep = "\t",file = here("src/toy_mask_example.tsv"),row.names = FALSE)
 
 tbls  <- db_list_tables(omop_db)
 
-inner_join(x = tbl(omop_db,"PERSON"),tbl(omop_db,"SPECIMEN")) %>%
+inner_join(x = tbl(omop_db,"PERSON"),tbl(omop_db,"SPECIMEN")) %>% 
   inner_join(tbl(omop_db,"SEQUENCING")) %>%
-  select_if(function(x) !all(is.na(x))) %>%
-  filter(specimen_source_value == "metastatic driver" & quantity > 0) %>%
-  select(person_source_value,specimen_source_value,quantity,unit_concept_id,file_local_source) %>%
+  select_if(function(x) !all(is.na(x))) %>% 
+  filter(disease_status_source_value == "94626004" & quantity > 0) %>%
+  select(person_source_value,specimen_source_value,quantity,disease_status_source_value,unit_concept_id,file_local_source) %>%
   as_tibble() %>%
-  mutate(file_local_source = basename(file_local_source))
-           
-  
-  
-
+  mutate(file_local_source = basename(file_local_source)) %>%
+  rowwise() %>%
+  mutate(description = read_athena(disease_status_source_value))
