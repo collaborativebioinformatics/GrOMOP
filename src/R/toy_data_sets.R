@@ -51,7 +51,7 @@ generate_variant_set  <- function(patient_id="TT453FF",test_number=1,out_length_
       select(-len) %>%
       write.csv(file = out_file_name,quote = FALSE,row.names = FALSE)
   }
-  return(out_file_name)
+  return(file.path(write_directory,out_file_name))
 }
 
 evs_tb  <- tibble(patient_id = sapply(c(1:pat_num), function(x) random_patient_id())) %>%

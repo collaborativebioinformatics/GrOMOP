@@ -16,5 +16,8 @@ cosmic*
 data/toy_data*
 .nextflow*
 
+*test_data
+*data/toy_data
+
 #MAC
 .DS_Store
